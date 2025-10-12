@@ -67,22 +67,27 @@ const DashboardHeader = ({ userName, profileImage, balance = 0, onRefreshBalance
         <div className="flex items-center justify-between">
           <button
             onClick={() => setIsHidden((v) => !v)}
-            className="inline-flex items-center gap-2 text-sm font-semibold text-white transition hover:text-white/90"
-            aria-label={isHidden ? 'Lihat saldo' : 'Sembunyikan saldo'}
+            className="inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-2 text-sm font-semibold text-white transition hover:bg-white/20"
+            aria-label={isHidden ? 'Lihat saldo' : 'Tutup saldo'}
           >
-            <span>{isHidden ? 'Lihat Saldo' : 'Sembunyikan Saldo'}</span>
             {isHidden ? (
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12Z"/>
-                <circle cx="12" cy="12" r="3"/>
-              </svg>
+              <>
+                <span>Lihat Saldo</span>
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12Z" />
+                  <circle cx="12" cy="12" r="3" />
+                </svg>
+              </>
             ) : (
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M17.94 17.94A10.94 10.94 0 0 1 12 20c-7 0-11-8-11-8a20.78 20.78 0 0 1 5.06-5.94"/>
-                <path d="M1 1l22 22"/>
-                <path d="M10.58 10.58A2 2 0 0 0 12 14a2 2 0 0 0 1.42-.59"/>
-                <path d="M9.88 5.12A10.94 10.94 0 0 1 12 4c7 0 11 8 11 8a21.12 21.12 0 0 1-5.1 6.02"/>
-              </svg>
+              <>
+                <span>Sembunyikan Saldo</span>
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M17.94 17.94A10.94 10.94 0 0 1 12 20c-7 0-11-8-11-8a20.78 20.78 0 0 1 5.06-5.94" />
+                  <path d="M1 1l22 22" />
+                  <path d="M10.58 10.58A2 2 0 0 0 12 14a2 2 0 0 0 1.42-.59" />
+                  <path d="M9.88 5.12A10.94 10.94 0 0 1 12 4c7 0 11 8 11 8a21.12 21.12 0 0 1-5.1 6.02" />
+                </svg>
+              </>
             )}
           </button>
           {onRefreshBalance && (
@@ -90,7 +95,7 @@ const DashboardHeader = ({ userName, profileImage, balance = 0, onRefreshBalance
               onClick={onRefreshBalance}
               className="rounded-full bg-white/20 px-4 py-2 text-xs font-semibold text-white backdrop-blur transition hover:bg-white/30"
             >
-              Segarkan
+              Refresh
             </button>
           )}
         </div>

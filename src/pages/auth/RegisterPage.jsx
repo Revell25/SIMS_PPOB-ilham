@@ -206,7 +206,7 @@ const RegisterPage = () => {
   return (
     <div className="min-h-screen bg-white">
       <div className="grid min-h-screen lg:grid-cols-2">
-        <div className="flex items-center justify-center px-6 py-12 sm:px-12">
+        <div className="flex min-h-screen items-center justify-center px-6 py-12 sm:px-12">
           <div className="w-full max-w-md space-y-8">
             <div className="flex items-center justify-center gap-3">
               <img src={brandLogo} alt="SIMS PPOB" className="h-8 w-8" />
@@ -307,11 +307,11 @@ const RegisterPage = () => {
           </div>
         </div>
 
-        <div className="relative hidden overflow-hidden bg-rose-50 lg:flex">
+        <div className="relative hidden min-h-screen overflow-hidden bg-rose-50 lg:flex">
           <img
             src={authIllustration}
             alt="Ilustrasi registrasi SIMS PPOB"
-            className="h-full w-full object-cover"
+            className="h-full w-full object-contain p-10"
           />
         </div>
       </div>
