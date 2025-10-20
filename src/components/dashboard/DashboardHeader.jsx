@@ -54,10 +54,7 @@ const DashboardHeader = ({ userName, profileImage, balance = 0, onRefreshBalance
           backgroundColor: '#ef4444',
         }}
       >
-        <div className="flex items-center gap-2 opacity-95">
-          <img src={brandLogo} alt="SIMS PPOB" className="h-6 w-6" />
-          <span className="text-sm font-semibold">SIMS PPOB</span>
-        </div>
+       
         <div>
           <p className="text-sm text-white/80">Saldo anda</p>
           <p className="mt-2 text-3xl font-semibold tracking-wide">

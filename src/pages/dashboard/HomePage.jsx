@@ -97,10 +97,7 @@ const HomePage = () => {
           <h3 className="text-lg font-semibold text-slate-900">
             Layanan SIMS PPOB
           </h3>
-          <p className="text-sm text-slate-500">
-            Pilih layanan untuk memulai pembayaran
-          </p>
-        </div>
+              </div>
         <ServiceGrid
           services={services}
           loading={servicesStatus === 'loading'}
