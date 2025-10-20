@@ -216,9 +216,6 @@ const RegisterPage = () => {
               <h1 className="text-2xl font-semibold text-slate-900 sm:text-3xl">
                 Lengkapi data untuk membuat akun
               </h1>
-              <p className="text-sm text-slate-500">
-                Dapatkan akses ke top up, pembayaran, dan riwayat transaksi dalam satu aplikasi.
-              </p>
             </div>
 
             <form

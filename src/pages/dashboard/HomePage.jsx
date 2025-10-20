@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from '../../app/hooks.js'
 import BannerCarousel from '../../components/dashboard/BannerCarousel.jsx'
 import ServiceGrid from '../../components/dashboard/ServiceGrid.jsx'
-import { formatCurrency, formatDateTime } from '../../lib/format.js'
 import { selectBalance } from '../../features/balance/balanceSlice.js'
 import { fetchBalance } from '../../features/balance/balanceThunks.js'
 import {
@@ -26,6 +25,7 @@ import {
   selectTransactionHistory,
   selectTransactionStatus,
 } from '../../features/transactions/transactionsSlice.js'
+import TransactionsTable from '../../components/dashboard/TransactionsTable.jsx'
 
 const HomePage = () => {
   const dispatch = useAppDispatch()
@@ -114,12 +114,7 @@ const HomePage = () => {
           <h3 className="text-lg font-semibold text-slate-900">
             Temukan promo menarik
           </h3>
-          <button
-            onClick={handleRefreshServices}
-            className="text-sm font-semibold text-brand-600 hover:text-brand-500"
-          >
-            Muat ulang
-          </button>
+
         </div>
         <div className="mt-4">
           <BannerCarousel
@@ -142,53 +137,12 @@ const HomePage = () => {
           </button>
         </div>
 
-        {historyStatus === 'loading' ? (
-          <div className="space-y-3">
-            {Array.from({ length: 3 }).map((_, index) => (
-              <div
-                key={index}
-                className="h-16 animate-pulse rounded-2xl bg-slate-100"
-              />
-            ))}
-          </div>
-        ) : recentHistory.length ? (
-          <div className="divide-y divide-slate-100 rounded-2xl border border-slate-100 bg-white shadow-sm">
-            {recentHistory.map((item) => (
-              <div
-                key={item.invoice_number}
-                className="flex flex-wrap items-center justify-between gap-3 px-4 py-4"
-              >
-                <div>
-                  <p className="text-sm font-semibold text-slate-800">
-                    {item.description}
-                  </p>
-                  <p className="text-xs text-slate-500">
-                    {formatDateTime(item.created_on)}
-                  </p>
-                </div>
-                <div className="text-right">
-                  <p
-                    className={`text-sm font-semibold ${
-                      item.transaction_type === 'TOPUP'
-                        ? 'text-emerald-600'
-                        : 'text-slate-900'
-                    }`}
-                  >
-                    {item.transaction_type === 'TOPUP' ? '+' : '-'}{' '}
-                    {formatCurrency(item.total_amount)}
-                  </p>
-                  <p className="text-xs text-slate-400">
-                    {item.invoice_number}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
-        ) : (
-          <div className="rounded-2xl border border-dashed border-slate-200 p-6 text-center text-sm text-slate-500">
-            Belum ada riwayat transaksi.
-          </div>
-        )}
+        <TransactionsTable
+          records={recentHistory}
+          isLoading={historyStatus === 'loading'}
+          emptyMessage="Belum ada riwayat transaksi."
+          skeletonCount={3}
+        />
       </section>
     </div>
   )

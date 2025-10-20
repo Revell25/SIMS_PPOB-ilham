@@ -123,7 +123,7 @@ const TopUpPage = () => {
             </form>
           </div>
 
-          <aside className="grid gap-3 sm:grid-cols-3 lg:grid-cols-2">
+          <aside className="grid gap-3 sm:grid-cols-3  lg:grid-cols-2">
             {TOP_UP_OPTIONS.map((amount) => {
               const isSelected = form.getValues('amount') === amount
               return (

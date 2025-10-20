@@ -1,17 +1,17 @@
-import { useEffect, useMemo, useState } from "react"
-import toast from "react-hot-toast"
-import { useAppDispatch, useAppSelector } from "../../app/hooks.js"
-import Button from "../../components/ui/Button.jsx"
-import { formatCurrency, formatDateTime } from "../../lib/format.js"
-import { fetchTransactionHistory } from "../../features/transactions/transactionThunks.js"
+import { useEffect, useMemo, useState } from 'react'
+import toast from 'react-hot-toast'
+import { useAppDispatch, useAppSelector } from '../../app/hooks.js'
+import Button from '../../components/ui/Button.jsx'
+import TransactionsTable from '../../components/dashboard/TransactionsTable.jsx'
+import { fetchTransactionHistory } from '../../features/transactions/transactionThunks.js'
 import {
   selectTransactionHistory,
   selectTransactionStatus,
-} from "../../features/transactions/transactionsSlice.js"
-import { selectProfile } from "../../features/profile/profileSlice.js"
-import { selectBalance } from "../../features/balance/balanceSlice.js"
-import { fetchBalance } from "../../features/balance/balanceThunks.js"
-import DashboardHeader from "../../components/dashboard/DashboardHeader.jsx"
+} from '../../features/transactions/transactionsSlice.js'
+import { selectProfile } from '../../features/profile/profileSlice.js'
+import { selectBalance } from '../../features/balance/balanceSlice.js'
+import { fetchBalance } from '../../features/balance/balanceThunks.js'
+import DashboardHeader from '../../components/dashboard/DashboardHeader.jsx'
 
 const HISTORY_LIMIT_OPTIONS = [10, 20, 30]
 
@@ -104,7 +104,6 @@ const HistoryPage = () => {
                   </option>
                 ))}
               </select>
-               
             </label>
             <Button onClick={handleRefresh} variant="secondary" className="sm:w-auto">
               Muat ulang
@@ -112,73 +111,26 @@ const HistoryPage = () => {
           </div>
         </div>
 
-        {historyStatus === "loading" && historyItems.length === 0 ? (
-          <div className="space-y-3">
-            {Array.from({ length: 5 }).map((_, index) => (
-              <div
-                key={index}
-                className="h-24 animate-pulse rounded-2xl bg-white/60"
-              />
-            ))}
-          </div>
-        ) : historyItems.length ? (
-          <div className="space-y-3">
-            {historyItems.map((item) => {
-              const isTopUp = item.transaction_type === "TOPUP"
-              const amountSign = isTopUp ? "+" : "-"
-              const amountColor = isTopUp ? "text-emerald-500" : "text-brand-600"
-              return (
-                <div
-                  key={item.invoice_number}
-                  className="flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-slate-100 bg-white px-5 py-4 shadow-sm"
-                >
-                  <div className="space-y-1">
-                    <p className={`text-lg font-semibold ${amountColor}`}>
-                      {amountSign} {formatCurrency(item.total_amount)}
-                    </p>
-                    <p className="text-xs text-slate-400">
-                      {formatDateTime(item.created_on)}
-                    </p>
-                  </div>
-                  <div className="text-right">
-                    <p className="text-sm font-semibold text-slate-700">
-                      {item.description || item.invoice_number}
-                    </p>
-                    <p className="text-xs text-slate-400">
-                      {isTopUp ? "Top up Saldo" : "Pembayaran Layanan"}
-                    </p>
-                  </div>
-                </div>
-              )
-            })}
-            {historyStatus === 'loading' && historyItems.length > 0 && (
-              <div className="space-y-3">
-                {Array.from({ length: 2 }).map((_, index) => (
-                  <div
-                    key={`skeleton-${index}`}
-                    className="h-20 animate-pulse rounded-2xl bg-white/60"
-                  />
-                ))}
-              </div>
-            )}
-            <div className="flex justify-center pt-2">
-              <Button
-                onClick={() => {
-                  const nextOffset = offset + limit
-                  setOffset(nextOffset)
-                  dispatch(fetchTransactionHistory({ limit, offset: nextOffset }))
-                }}
-                variant="ghost"
-                className="w-full max-w-xs border border-brand-200 text-brand-600 hover:bg-brand-50"
-                disabled={historyStatus === 'loading'}
-              >
-                {historyStatus === 'loading' ? 'Memuat...' : 'Show More'}
-              </Button>
-            </div>
-          </div>
-        ) : (
-          <div className="rounded-2xl border border-dashed border-slate-200 bg-white p-6 text-center text-sm text-slate-500">
-            Belum ada riwayat transaksi untuk ditampilkan.
+        <TransactionsTable
+          records={historyItems}
+          isLoading={historyStatus === 'loading' && historyItems.length === 0}
+          emptyMessage="Belum ada riwayat transaksi untuk ditampilkan."
+        />
+
+        {historyItems.length > 0 && (
+          <div className="flex justify-center pt-4">
+            <Button
+              onClick={() => {
+                const nextOffset = offset + limit
+                setOffset(nextOffset)
+                dispatch(fetchTransactionHistory({ limit, offset: nextOffset }))
+              }}
+              variant="ghost"
+              className="w-full max-w-xs border border-brand-200 text-brand-600 hover:bg-brand-50"
+              disabled={historyStatus === 'loading' || (history && history.length < limit)}
+            >
+              {historyStatus === 'loading' ? 'Memuat...' : 'Tampilkan lebih banyak'}
+            </Button>
           </div>
         )}
       </section>
